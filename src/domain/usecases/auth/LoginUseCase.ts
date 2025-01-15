@@ -1,3 +1,4 @@
+import { AuthRepository } from "../../../infraestructure/repository/AuthRepository";
 
 
 
@@ -5,7 +6,7 @@
 export class LoginUseCase{
 
 
-    constructor(){
+    constructor(private readonly authRepo:AuthRepository){
 
     }
 
