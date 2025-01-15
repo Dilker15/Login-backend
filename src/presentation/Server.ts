@@ -2,6 +2,7 @@ import express,{Application, urlencoded} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv'
 import { AppRoutes } from './AppRoutes';
+import { PostgresConnection } from '../infraestructure/connections/PostgresConnection';
 dotenv.config();
 
 
@@ -39,8 +40,9 @@ export class Server{
         })
     }
 
-    private startConnections():void{
+    private async startConnections():Promise<void>{
         try{
+            await PostgresConnection.startConnection();
             this.startServer();
         }catch(error){
 

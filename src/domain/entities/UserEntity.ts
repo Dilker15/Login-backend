@@ -26,5 +26,10 @@ export class UserEntity{
     }
 
 
+
+    static userEntityFromObject(data:{[key:string]:any}):UserEntity{
+        return new UserEntity(data.id,data.name,data.email,data.password,data.dni,data.email_verified,data.created_on,data.updated_on);
+    }
+
     
 }
