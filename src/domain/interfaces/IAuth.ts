@@ -7,6 +7,6 @@ export interface IAuth{
 
     login(data:LoginDto):Promise<UserEntity>;
     register(data:RegisterDto):Promise<UserEntity>;
-    verification(email:string):Promise<void>;
+    verification(email:string):Promise<UserEntity>;
 
 }

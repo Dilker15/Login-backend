@@ -11,8 +11,18 @@ export class AuthRepository implements IAuth{
 
     }
 
-    login(data: LoginDto): Promise<UserEntity> {
-        throw new Error("Method not implemented.");
+    async login(data: LoginDto): Promise<UserEntity> {
+       const user =await this.prisma.users.findFirst({
+            where:{
+                email:data.email,
+                email_verified:true,
+                
+            }
+       });
+       if(!user){
+         throw new Error('User Does not exist');
+       }
+       return UserEntity.userEntityFromObject(user);
     }
 
 
@@ -31,8 +41,23 @@ export class AuthRepository implements IAuth{
 
 
 
-    verification(email: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async verification(email: string): Promise<UserEntity> {
+        const user = await this.prisma.users.findFirst({
+            where:{email}
+        });
+
+        if(!user){
+            throw new Error('User not Found to Verify');
+        }
+        const userFound = await this.prisma.users.update({
+            where:{
+                email
+            },
+            data:{
+                email_verified:true,
+            }
+        });
+        return UserEntity.userEntityFromObject(userFound);
     }
 
 
