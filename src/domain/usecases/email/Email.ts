@@ -16,10 +16,11 @@ export class Email{
     }
 
 
-    async sendEmailVerification(to:string):Promise<void>{
+    async sendEmailVerification(to:string,token:string):Promise<void>{
         const body = fs.readFileSync('./src/presentation/templates/verificationTemplate.html','utf-8');
-        const urlToVerify = process.env.SERVER_URL_VERIFY+'/'+'token';
+        const urlToVerify = process.env.SERVER_URL_VERIFY+'/'+token;
         const newBody = body.replace('{{verification_link}}',urlToVerify);
+        
         const options = {
         from:process.env.EMAIIL_USER,
         to,                                 

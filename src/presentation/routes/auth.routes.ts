@@ -6,6 +6,7 @@ import { LoginUseCase } from "../../domain/usecases/auth/LoginUseCase";
 import { RegisterUseCase } from "../../domain/usecases/auth/RegisterUseCase";
 import Prisma  from '../../domain/config/Prisma';
 import { Email } from "../../domain/usecases/email/Email";
+import { VerificationUseCase } from "../../domain/usecases/auth/VerificationUseCase";
 
 
 
@@ -18,8 +19,10 @@ export class AuthRoutes{
         const loginUc  = new LoginUseCase(authRepo);
         const EmailService = new Email();
         const registerUc = new RegisterUseCase(authRepo,EmailService);
+        const verificationUc = new VerificationUseCase(authRepo);
+        const authController = new AuthController(loginUc,registerUc,verificationUc)
 
-        const authController = new AuthController(loginUc,registerUc)
+        
         
         router.post('/register',authController.registrationUser);
         router.post('/login',authController.loginUser);
